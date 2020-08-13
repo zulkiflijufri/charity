@@ -18,6 +18,7 @@ import CharityList from './CharityList.svelte'
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
+		border: 0.5em solid #1a1a1a;
 	}
 
 	h1 {
