@@ -6,7 +6,7 @@
 	{#if charities !== undefined}
 	{#each charities as charity}
 		<ul>
-			<li>{charity}</li>
+			<li>{charity.title} - {charity.profile_name}</li>
 		</ul>
 	{/each}
 	{:else}

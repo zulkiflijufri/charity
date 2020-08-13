@@ -1,12 +1,12 @@
 <script>
 import CharityList from '../components/CharityList.svelte'
+import { charities } from '../data/charities.js'
 
 	let name = "Mari Berbagi"
 	setTimeout(function() {
 		name = "Mari Berdonasi"
 	}, 2000);
 
-	let charities = ['Charity 1', 'Charity 2', 'Charity 3'];
 </script>
 
 <main>
