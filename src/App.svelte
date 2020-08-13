@@ -1,4 +1,6 @@
 <script>
+import CharityList from './CharityList.svelte'
+
 	let name = "Mari Berbagi"
 	setTimeout(function() {
 		name = "Mari Berdonasi"
@@ -7,11 +9,12 @@
 
 <main>
 	<h1>{name}</h1>
+	<CharityList />
 </main>
 
 <style>
 	main {
-		text-align: center;
+		/*text-align: center;*/
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
