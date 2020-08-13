@@ -5,11 +5,13 @@ import CharityList from './CharityList.svelte'
 	setTimeout(function() {
 		name = "Mari Berdonasi"
 	}, 2000);
+
+	let charities = ['Charity 1', 'Charity 2', 'Charity 3'];
 </script>
 
 <main>
 	<h1>{name}</h1>
-	<CharityList />
+	<CharityList {charities}/>
 </main>
 
 <style>
