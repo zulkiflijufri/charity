@@ -1,12 +1,12 @@
 {
   "name": "svelte-app",
   "version": "1.0.0",
-  "scripts": {
+  "scripts": { // perintah yg dapat dijalankan dengan npm run
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public"
   },
-  "devDependencies": {
+  "devDependencies": { // running in development mode
     "@rollup/plugin-commonjs": "^12.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "rollup": "^2.3.4",
@@ -15,7 +15,7 @@
     "rollup-plugin-terser": "^5.1.2",
     "svelte": "^3.0.0"
   },
-  "dependencies": {
+  "dependencies": { // running in production
     "sirv-cli": "^1.0.0"
   }
 }
