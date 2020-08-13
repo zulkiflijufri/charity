@@ -1,5 +1,8 @@
 <script>
 	let name = "Mari Berbagi"
+	setTimeout(function() {
+		name = "Mari Berdonasi"
+	}, 2000);
 </script>
 
 <main>
