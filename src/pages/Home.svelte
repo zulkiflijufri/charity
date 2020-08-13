@@ -11,6 +11,7 @@ import CharityList from '../components/CharityList.svelte'
 
 <main>
 	<h1>{name}</h1>
+	<CharityList />
 	<CharityList {charities}/>
 </main>
 

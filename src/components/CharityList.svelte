@@ -1,11 +1,15 @@
 <script>
-	export let charities = "Charity not found";
+	export let charities;
 </script>
 <main>
 	<h2>Daftar Charity</h2>
-	<pre>{charities}</pre>
-	<ul>
-		<li>Charity 1</li>
-		<li>Charity 2</li>
-	</ul>
+	{#if charities !== undefined}
+	{#each charities as charity}
+		<ul>
+			<li>{charity}</li>
+		</ul>
+	{/each}
+	{:else}
+		<p>Charity not avalible</p>
+	{/if}
 </main>
