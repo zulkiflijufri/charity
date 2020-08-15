@@ -1,5 +1,8 @@
 <script>
+	import Modal from './Modal.svelte'
+
 	export let charities;
+	let isOpenModal = false;
 
 	function calculateFunded (target, pledged) {
 		return Math.round((1 / (target/pledged) * 100))
@@ -15,7 +18,23 @@
 		const oneDay = 24 * 60 * 60 * 1000;
 		return Math.round(Math.abs(delta / oneDay));
 	}
+	function handleButton() {
+		isOpenModal = true;
+	}
+	function handleModalClose() {
+		isOpenModal = false
+	}
 </script>
+
+<style>
+	.xs-list-with-content {
+		font-size: 12px;
+	}
+	.show {
+		display: block;
+		background: rgba(0, 0, 0, 0.45);
+	}
+</style>
 
 <!-- popularCauses section -->
 <section id="popularcause" class="bg-gray waypoint-tigger xs-section-padding">
@@ -31,18 +50,17 @@
 		<div class="row">
 			{#if charities !== undefined}
 			{#each charities as charity}
-				<div class="col-lg-4 col-md-6">
-					<!-- modal goes here -->
-					<!-- Modal -->
-					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-					aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="col-lg-4 col-md-6">
+				<!-- modal goes here -->
+				<!-- Modal -->
+				{#if isOpenModal}
+					<Modal>
+					<div class="modal fade show">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Splash Drone 3 a Fully Waterproof
-									Drone that
-								floats</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<h5 class="modal-title" id="exampleModalLabel">{charity.title}</h5>
+								<button type="button" on:click={handleModalClose} class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
@@ -74,53 +92,54 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="xs-popular-item xs-box-shadow">
-					<div class="xs-item-header">
+					</div>
+					</Modal>
+				{/if}
+			<div class="xs-popular-item xs-box-shadow">
+				<div class="xs-item-header">
 
-						<img src="{charity.thumbnail}" alt="">
+					<img src="{charity.thumbnail}" alt="">
 
-						<div class="xs-skill-bar">
-							<div class="xs-skill-track">
-								<p><span class="number-percentage-count number-percentage" data-value="90"
-									data-animation-duration="3500">{calculateFunded(charity.target, charity.pledged)}</span>%</p>
-								</div>
+					<div class="xs-skill-bar">
+						<div class="xs-skill-track">
+							<p><span class="number-percentage-count number-percentage" data-value="90"
+								data-animation-duration="3500">{calculateFunded(charity.target, charity.pledged)}</span>%</p>
 							</div>
-						</div><!-- .xs-item-header END -->
-						<div class="xs-item-content">
-							<ul class="xs-simple-tag xs-mb-20">
-								<li><a href="">{charity.category}</a></li>
+						</div>
+					</div><!-- .xs-item-header END -->
+					<div class="xs-item-content">
+						<ul class="xs-simple-tag xs-mb-20">
+							<li><a href="">{charity.category}</a></li>
+						</ul>
+
+						<a href="#" class="xs-post-title xs-mb-30">{charity.title}</a>
+
+						<ul class="xs-list-with-content">
+							<li style="text-align: center;">{formatCurrency(charity.pledged)}<span>Pledged</span></li>
+							<li style="text-align: center;"><span class="number-percentage-count number-percentage" data-value="90"
+								data-animation-duration="3500">{calculateFunded(charity.target, charity.pledged)}</span>% <span>Funded</span></li>
+								<li style="text-align: center;">{calculateDays(charity.date_end)}<span>Days to go</span></li>
 							</ul>
 
-							<a href="#" class="xs-post-title xs-mb-30">{charity.title}</a>
+							<span class="xs-separetor"></span>
 
-							<ul class="xs-list-with-content">
-								<li style="text-align: center;">{formatCurrency(charity.pledged)}<span>Pledged</span></li>
-								<li style="text-align: center"><span class="number-percentage-count number-percentage" data-value="90"
-									data-animation-duration="3500">{calculateFunded(charity.target, charity.pledged)}</span>% <span>Funded</span></li>
-									<li style="text-align: center">{calculateDays(charity.date_end)}<span style="text-align: center;">Days to go</span></li>
-								</ul>
-
-								<span class="xs-separetor"></span>
-
-								<div class="row xs-margin-0">
-									<div class="xs-round-avatar">
-										<img src="{charity.profile_photo}" alt="">
-									</div>
-									<div class="xs-avatar-title">
-										<a href="#"><span>By</span>{charity.profile_name}</a>
-									</div>
+							<div class="row xs-margin-0">
+								<div class="xs-round-avatar">
+									<img src="{charity.profile_photo}" alt="">
 								</div>
+								<div class="xs-avatar-title">
+									<a href="#"><span>By</span>{charity.profile_name}</a>
+								</div>
+							</div>
 
-								<span class="xs-separetor"></span>
+							<span class="xs-separetor"></span>
 
-								<a href="#" data-toggle="modal" data-target="#exampleModal"
-								class="btn btn-primary btn-block">
+							<button on:click={handleButton} class="btn btn-primary btn-block">
 								Donate This Cause
-							</a>
-						</div><!-- .xs-item-content END -->
-					</div><!-- .xs-popular-item END -->
-				</div>
+							</button>
+					</div><!-- .xs-item-content END -->
+				</div><!-- .xs-popular-item END -->
+			</div>
 			{/each}
 			{/if}
 		</div><!-- .row end -->
