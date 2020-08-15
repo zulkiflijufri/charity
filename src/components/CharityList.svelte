@@ -134,9 +134,9 @@
 
 							<span class="xs-separetor"></span>
 
-							<button on:click={handleButton} class="btn btn-primary btn-block">
+							<a href="/donation/{charity.id}" class="btn btn-primary btn-block">
 								Donate This Cause
-							</button>
+							</a>
 					</div><!-- .xs-item-content END -->
 				</div><!-- .xs-popular-item END -->
 			</div>
