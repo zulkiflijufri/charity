@@ -1,10 +1,11 @@
 <script>
+  import router from 'page'
   import { onMount } from 'svelte'
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
 
   export let params;
-  let charity;
+  let charity, amount, name, email, agree = false;
 
   async function getCharity(id) {
     const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${id}`);
@@ -14,6 +15,24 @@
   onMount(async function() {
     charity = await getCharity(params.id);
   })
+
+  async function handleForm() {
+    try {
+      charity.pledged = charity.pledged + parseInt(amount)
+      const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${params.id}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(charity) //fetch ga bisa menerima format json, maka parsing ke string
+      });
+      // console.log(res);
+      router.redirect('/success');
+    } catch(err) {
+      console.log(err);
+    }
+
+  }
 </script>
 
 <style>
@@ -72,14 +91,14 @@
                   "color-green">+44(0) 800 883 8450</span>.</p><span class=
                   "xs-separetor v2"></span>
                 </div><!-- .xs-heading end -->
-                <form action="#" method="post" id="xs-donation-form" class="xs-donation-form" name="xs-donation-form">
+                <form on:submit|preventDefault={handleForm} method="post" id="xs-donation-form" class="xs-donation-form" name="xs-donation-form">
                 <div class="xs-input-group">
                   <label for="xs-donate-name">
                     Donation Amount
                     <span class="color-light-red">**</span>
                   </label>
                   <input type="text" name="amount" id="xs-donate-amount" class="form-control" required="true"
-                  placeholder="Your donation in Rupiah" />
+                  placeholder="Your donation in Rupiah" bind:value={amount}/>
                 </div>
                 <!-- .xs-input-group END -->
                 <div class="xs-input-group">
@@ -88,24 +107,24 @@
                     <span class="color-light-red">**</span>
                   </label>
                   <input type="text" name="name" id="xs-donate-name" class="form-control" required="true"
-                  placeholder="Your awesome name" />
+                  placeholder="Your awesome name" bind:value={name}/>
                 </div>
                 <div class="xs-input-group">
                   <label for="xs-donate-email">
                     Your Email
                     <span class="color-light-red">**</span>
                   </label>
-                  <input type="email" name="email" required="true" id="xs-donate-email" class="form-control" placeholder="email@awesome.com" />
+                  <input type="email" name="email" required="true" id="xs-donate-email" class="form-control" placeholder="email@awesome.com" bind:value={email}/>
                 </div>
                 <div class="xs-input-group" id="xs-input-checkbox">
-                  <input type="checkbox" name="agree" id="xs-donate-agree" />
+                  <input type="checkbox" name="agree" id="xs-donate-agree" bind:checked={agree}/>
                   <label for="xs-donate-agree">
                     I Agree
                     <span class="color-light-red">**</span>
                   </label>
                 </div>
                 <!-- .xs-input-group END -->
-                <button type="submit" class="btn btn-warning">
+                <button type="submit" class="btn btn-warning" disabled={!agree}>
                   <span class="badge">
                     <i class="fa fa-heart" />
                   </span>
