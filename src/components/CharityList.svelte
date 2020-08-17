@@ -48,7 +48,6 @@
 			</div><!-- .xs-heading-title END -->
 		</div><!-- .row end -->
 		<div class="row">
-			{#if charities !== undefined}
 			{#each charities as charity}
 			<div class="col-lg-4 col-md-6">
 				<!-- modal goes here -->
@@ -141,7 +140,6 @@
 				</div><!-- .xs-popular-item END -->
 			</div>
 			{/each}
-			{/if}
 		</div><!-- .row end -->
 	</div><!-- .container end -->
 </section><!-- End popularCauses section -->

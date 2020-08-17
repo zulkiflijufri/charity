@@ -1,32 +1,18 @@
 <script>
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount } from 'svelte'
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
-  import { charities } from '../data/charities.js'
 
   export let params;
-  let data, seconds = 0;
+  let charity;
 
-  function getCharity(id) {
-    return charities.find((charity) => {
-      return charity.id === parseInt(id);
-    })
+  async function getCharity(id) {
+    const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${id}`);
+    return res.json();
   }
 
-  onMount(function() {
-    setTimeout(function() {
-      data = getCharity(params.id);
-    }, 2000)
-  })
-
-  const idInterval = setInterval(function() {
-    seconds += 1
-    console.log(seconds);
-  }, 1000)
-
-  onDestroy(function() {
-    console.log("destroy page donation");
-    clearInterval(idInterval)
+  onMount(async function() {
+    charity = await getCharity(params.id);
   })
 </script>
 
@@ -70,16 +56,16 @@
   <!-- donation form section -->
   <section class="xs-section-padding bg-gray">
     <div class="container">
-      {#if data}
+      {#if charity}
       <div class="row">
         <div class="col-lg-6">
-          <div class="xs-donation-form-images"><img src={data.thumbnail} class="img-responsive" alt=
+          <div class="xs-donation-form-images"><img src={charity.thumbnail} class="img-responsive" alt=
             "Family Images"></div>
           </div>
           <div class="col-lg-6">
             <div class="xs-donation-form-wraper">
               <div class="xs-heading xs-mb-30">
-                <h2 class="xs-title">{data.title}</h2>
+                <h2 class="xs-title">{charity.title}</h2>
                 <p class="small">To learn more about make donate charity
                   with us visit our "<span class="color-green">Contact
                   us</span>" site. By calling <span class=
