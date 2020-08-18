@@ -5,13 +5,6 @@
 
 <Header />
 
-  <!-- <div id="preloader">
-    <div class="spinner">
-      <div class="double-bounce1"></div>
-      <div class="double-bounce2"></div>
-    </div>
-  </div> -->
-
 <!-- welcome section -->
 <!--breadcumb start here-->
 <section class="xs-banner-inner-section parallax-window" style="background-image:url('assets/images/about_bg.png')">

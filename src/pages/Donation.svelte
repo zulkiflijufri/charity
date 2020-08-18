@@ -1,20 +1,16 @@
 <script>
   import router from 'page'
-  import { onMount } from 'svelte'
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
+  import Preload from '../components/Preload.svelte'
 
   export let params;
-  let charity, amount, name, email, agree = false;
+  let charity, amount, name, email, agree = false, data = getCharity(params.id);
 
   async function getCharity(id) {
     const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${id}`);
     return res.json();
   }
-
-  onMount(async function() {
-    charity = await getCharity(params.id);
-  })
 
   async function handleForm() {
     try {
@@ -73,9 +69,11 @@
 </section><!--breadcumb end here--><!-- End welcome section -->
 <main class="xs-main">
   <!-- donation form section -->
+  {#await data}
+    <Preload />
+  {:then charity}
   <section class="xs-section-padding bg-gray">
     <div class="container">
-      {#if charity}
       <div class="row">
         <div class="col-lg-6">
           <div class="xs-donation-form-images"><img src={charity.thumbnail} class="img-responsive" alt=
@@ -134,9 +132,9 @@
             </div>
           </div>
         </div><!-- .row end -->
-        {/if}
       </div><!-- .container end -->
     </section><!-- End donation form section -->
+    {/await}
     </main><!-- footer section start -->
 
 <Footer />
