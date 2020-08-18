@@ -1,4 +1,5 @@
 <script>
+import { onDestroy } from 'svelte'
 import Header from '../components/Header.svelte'
 import Welcome from '../components/Welcome.svelte'
 import Promo from '../components/Promo.svelte'
@@ -19,6 +20,14 @@ async function getData() {
 		throw new Error(data);
 	}
 }
+
+onDestroy(function() {
+	window.scrollTo({
+		top: 0,
+		bottom: 0,
+		behavior: 'smooth'
+	})
+})
 </script>
 
 <Header />

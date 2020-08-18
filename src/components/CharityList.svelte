@@ -111,7 +111,7 @@
 							<li><a href="">{charity.category}</a></li>
 						</ul>
 
-						<a href="#" class="xs-post-title xs-mb-30">{charity.title}</a>
+						<a href="/donation/{charity.id}" class="xs-post-title xs-mb-30">{charity.title}</a>
 
 						<ul class="xs-list-with-content">
 							<li style="text-align: center;">{formatCurrency(charity.pledged)}<span>Pledged</span></li>

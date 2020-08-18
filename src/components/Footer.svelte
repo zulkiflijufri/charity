@@ -1,3 +1,15 @@
+<script>
+  import { onDestroy } from 'svelte'
+
+  onDestroy(function() {
+    window.scrollTo({
+      top: 0,
+      bottom: 0,
+      behavior: 'smooth'
+    })
+  })
+</script>
+
 <!-- footer section start -->
   <footer class="xs-footer-section">
     <div class="container">
