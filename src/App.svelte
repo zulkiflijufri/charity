@@ -6,6 +6,7 @@ import Contact from './pages/Contact.svelte'
 import Donation from './pages/Donation.svelte'
 import NotFound from './pages/NotFound.svelte'
 import Success from './pages/Success.svelte'
+import Failure from './pages/Failure.svelte'
 
 let page, params;
 
@@ -17,6 +18,7 @@ router('/donation/:id', function(ctx, next) {
 	next();
 }, () => (page = Donation))
 router('/success', () => (page = Success))
+router('/error', () => (page = Failure))
 router('/*', () => (page = NotFound))
 
 router.start()
