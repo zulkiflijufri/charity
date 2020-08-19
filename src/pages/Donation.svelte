@@ -5,25 +5,44 @@
   import Preload from '../components/Preload.svelte'
 
   export let params;
-  let charity, amount, name, email, agree = false, data = getCharity(params.id);
+  let amount, name, email, agree = false;
 
   async function getCharity(id) {
-    const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${id}`);
+    const res = await fetch(`http://localhost:3000/charities/${id}`);
     return res.json();
   }
 
+  let data = getCharity(params.id);
+
   async function handleForm() {
+    agree = false;
+    const newData = await getCharity(params.id);
+    newData.pledged = newData.pledged + parseInt(amount)
     try {
-      charity.pledged = charity.pledged + parseInt(amount)
-      const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${params.id}`, {
+      const res = await fetch(`http://localhost:3000/charities/${params.id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify(charity) //fetch ga bisa menerima format json, maka parsing ke string
+        body: JSON.stringify(newData) //fetch ga bisa menerima format json, maka parsing ke string
       });
       // console.log(res);
-      router.redirect('/success');
+      // router.redirect('/success');
+      const resMid = await fetch(`/.netlify/functions/payment`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          id: params.id,
+          amount: parseInt(amount),
+          name,
+          email
+        })
+      });
+      const dataMid = await resMid.json();
+      // console.log(dataMid.url);
+      window.location.href = dataMid.url;
     } catch(err) {
       console.log(err);
     }
@@ -95,7 +114,7 @@
                     Donation Amount
                     <span class="color-light-red">**</span>
                   </label>
-                  <input type="text" name="amount" id="xs-donate-amount" class="form-control" required="true"
+                  <input type="number" name="amount" id="xs-donate-amount" class="form-control" required="true"
                   placeholder="Your donation in Rupiah" bind:value={amount}/>
                 </div>
                 <!-- .xs-input-group END -->
