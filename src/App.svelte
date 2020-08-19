@@ -13,12 +13,12 @@ let page, params;
 router('/', () => (page = Home))
 router('/about', () => (page = About))
 router('/contact', () => (page = Contact))
+router('/success', () => (page = Success))
+router('/error', () => (page = Failure))
 router('/donation/:id', function(ctx, next) {
 	params = ctx.params;
 	next();
 }, () => (page = Donation))
-router('/success', () => (page = Success))
-router('/error', () => (page = Failure))
 router('/*', () => (page = NotFound))
 
 router.start()
