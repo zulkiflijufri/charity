@@ -11,7 +11,7 @@ let charities = [];
 let data = getData();
 
 async function getData() {
-	const res = await fetch('http://localhost:3000/charities');
+	const res = await fetch('https://charity-api-bwa.herokuapp.com/charities');
 	const data = await res.json();
 	// console.log(res);
 	if (res.status == 200) {

@@ -8,7 +8,7 @@
   let amount, name, email, agree = false;
 
   async function getCharity(id) {
-    const res = await fetch(`http://localhost:3000/charities/${id}`);
+    const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${id}`);
     return res.json();
   }
 
@@ -19,7 +19,7 @@
     const newData = await getCharity(params.id);
     newData.pledged = newData.pledged + parseInt(amount)
     try {
-      const res = await fetch(`http://localhost:3000/charities/${params.id}`, {
+      const res = await fetch(`https://charity-api-bwa.herokuapp.com/charities/${params.id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
